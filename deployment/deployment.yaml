@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mnist-service-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mnist-service
+  template:
+    metadata:
+      labels:
+        app: mnist-service
+    spec:
+      containers:
+        - name: mnist-service
+          image: mnist-service:latest
+          ports:
+            - containerPort: 50051
