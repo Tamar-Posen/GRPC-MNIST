@@ -4,6 +4,7 @@ WORKDIR /app
 
 COPY requirements.txt .
 COPY app .
+COPY app/mnist_dataset /app/mnist_dataset
 
 # --- NETFREE CERT INTSALL ---
 ADD https://netfree.link/dl/unix-ca.sh /home/netfree-unix-ca.sh
@@ -14,5 +15,7 @@ ENV SSL_CERT_FILE=/etc/ca-bundle.crt
 # --- END NETFREE CERT INTSALL ---
 
 RUN pip install --no-cache-dir -r requirements.txt
+
+EXPOSE 50051
 
 CMD ["python", "mnist_service.py"]

@@ -1,10 +1,15 @@
 import grpc
 import mnist_proto_pb2 as mnist_pb2
 import mnist_proto_pb2_grpc as mnist_pb2_grpc
+import os
 
 
 def run():
-    channel = grpc.insecure_channel('localhost:50051')
+    server_address = os.environ.get('MNIST_SERVER_ADDRESS', 'localhost')
+
+    # Use the environment variable or default to 'localhost:50051'
+    channel = grpc.insecure_channel(f'{server_address}:50051')
+
     client = mnist_pb2_grpc.MnistServiceStub(channel)
 
     request = mnist_pb2.DataRequest()
