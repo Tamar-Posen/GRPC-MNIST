@@ -9,8 +9,6 @@ from concurrent.futures import ThreadPoolExecutor
 
 class MnistService(mnist_pb2_grpc.MnistServiceServicer):
     def GetTrainingSamples(self, request, context):
-        # mnist_data_dir = "../mnist_dataset"
-
         script_directory = os.path.dirname(os.path.abspath(__file__))
         mnist_data_dir = os.path.join(script_directory, "../mnist_dataset")
 

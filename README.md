@@ -8,8 +8,7 @@ This project implements a GRPC service that streams MNIST samples to a client.
 1. **Clone the repository:**
 
     ```bash
-    git clone https://github.com/your-username/your-mnist-grpc-project.git
-    cd your-mnist-grpc-project
+    git clone https://github.com/Tamar-Posen/GRPC-MNIST.git
     ```
 
 2. **Install dependencies:**
@@ -21,7 +20,7 @@ This project implements a GRPC service that streams MNIST samples to a client.
 3. **Run the service:**
 
     ```bash
-    python mnist_service.py
+    python app/mnist_service.py
     ```
 
 ## Usage
@@ -31,7 +30,7 @@ This project implements a GRPC service that streams MNIST samples to a client.
 2. **Run the client:**
 
     ```bash
-    python mnist_client.py
+    python app/mnist_client.py
     ```
 
     The client will connect to the service and receive streaming MNIST samples.
