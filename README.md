@@ -99,8 +99,8 @@ For local development, follow the steps mentioned in the Setup section.
     Apply the configuration:
 
     ```bash
-    kubectl apply -f deployment.yaml
-    kubectl apply -f service.yaml
+    kubectl apply -f deployment/deployment.yaml
+    kubectl apply -f deployment/service.yaml
     ```
 
 4. **Verify Kubernetes Deployment:**
