@@ -8,6 +8,7 @@ This project implements a GRPC service that streams MNIST samples to a client.
 
     ```bash
     git clone https://github.com/Tamar-Posen/GRPC-MNIST.git
+    cd GRPC-MNIST
     ```
 
 2. **Install dependencies:**
@@ -69,3 +70,58 @@ This project implements a GRPC service that streams MNIST samples to a client.
     ```
 
     The client will connect to the service and receive streaming MNIST samples.
+
+## Deployment
+
+### Local Deployment
+
+For local development, follow the steps mentioned in the Setup section.
+
+### Kubernetes Deployment with Minikube
+
+1. **Start Minikube:**
+
+    ```bash
+    minikube start
+    ```
+
+2. **Build and Load Docker Images into Minikube:**
+
+    ```bash
+    minikube docker-env
+    eval $(minikube -p minikube docker-env)
+    docker build -t mnist-service -f Dockerfile_service .
+    docker build -t mnist-client -f Dockerfile_client .
+    ```
+
+3. **Apply Kubernetes Manifests:**
+
+    Apply the configuration:
+
+    ```bash
+    kubectl apply -f deployment.yaml
+    kubectl apply -f service.yaml
+    ```
+
+4. **Verify Kubernetes Deployment:**
+
+    Retrieve the external IP:
+
+    ```bash
+    kubectl get services mnist-service
+    ```
+
+    Use the external IP to connect your client.
+
+### Clean Up
+
+1. **Local Deployment:**
+
+    - Stop and remove running containers.
+
+2. **Kubernetes Deployment:**
+
+    ```bash
+    minikube stop
+    minikube delete
+  
