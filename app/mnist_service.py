@@ -16,14 +16,25 @@ class MnistService(mnist_pb2_grpc.MnistServiceServicer):
         images_path = os.path.join(mnist_data_dir, "train-images-idx3-ubyte.gz")
         labels_path = os.path.join(mnist_data_dir, "train-labels-idx1-ubyte.gz")
 
-        images = self.read_mnist_images(images_path)
-        labels = self.read_mnist_labels(labels_path)
+        try:
+            images = self.read_mnist_images(images_path)
+            labels = self.read_mnist_labels(labels_path)
 
-        for i in range(len(images)):
-            image_data = images[i]
-            label = labels[i]
+            for i in range(len(images)):
+                image_data = images[i]
+                label = labels[i]
 
-            yield mnist_pb2.Sample(image=image_data, label=label)
+                yield mnist_pb2.Sample(image=image_data, label=label)
+
+        except FileNotFoundError:
+            context.set_code(grpc.StatusCode.NOT_FOUND)
+            context.set_details("MNIST data files not found")
+            return
+
+        except Exception as e:
+            context.set_code(grpc.StatusCode.INTERNAL)
+            context.set_details(f"An error occurred: {str(e)}")
+            return
 
     def read_mnist_images(self, file_path):
         with gzip.open(file_path, 'rb') as f:
