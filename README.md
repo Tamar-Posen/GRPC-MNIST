@@ -124,4 +124,15 @@ For local development, follow the steps mentioned in the Setup section.
     ```bash
     minikube stop
     minikube delete
+   
+### Testing
+
+1. **Run Unit Tests:**
+
+   Execute the following command to run the unit tests:
+   
+   ```bash
+    python -m unittest discover -s tests -p "*_test.py"
+    ```
+
   
