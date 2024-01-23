@@ -5,10 +5,22 @@ import gzip
 import os
 import struct
 from concurrent.futures import ThreadPoolExecutor
+#import boto3
+#from botocore.exceptions import NoCredentialsError
 
 
 class MnistService(mnist_pb2_grpc.MnistServiceServicer):
     def GetTrainingSamples(self, request, context):
+        # Retrieve data from S3 implementation
+
+        #s3_bucket = 'bucket-name'
+        #images_key = 'mnist_dataset/train-images-idx3-ubyte.gz'
+        #labels_key = 'mnist_dataset/train-labels-idx1-ubyte.gz'
+
+        #try:
+            #images = self.read_mnist_from_s3(s3_bucket, images_key)
+            #labels = self.read_mnist_from_s3(s3_bucket, labels_key)
+
         script_directory = os.path.dirname(os.path.abspath(__file__))
         mnist_data_dir = os.path.join(script_directory, "mnist_dataset")
 
@@ -48,6 +60,19 @@ class MnistService(mnist_pb2_grpc.MnistServiceServicer):
             magic, num_labels = struct.unpack('>II', f.read(8))
             labels = [struct.unpack('B', f.read(1))[0] for _ in range(num_labels)]
             return labels
+
+    #def read_mnist_from_s3(self, bucket, key):
+        #s3 = boto3.client('s3')
+
+        #try:
+            #response = s3.get_object(Bucket=bucket, Key=key)
+            #content = response['Body'].read()
+
+            #return [content[i:i + 28 * 28] for i in range(0, len(content), 28 * 28)]
+
+        #except NoCredentialsError:
+            #raise Exception("AWS credentials not available or invalid")
+
 
 
 def serve():
